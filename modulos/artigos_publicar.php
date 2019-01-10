@@ -20,7 +20,7 @@ $frm->addButton('Limpar', null, 'Limpar', null, null, false, false);
 $acao = isset($acao) ? $acao : null;
 switch( $acao ) {
     //--------------------------------------------------------------------------------
-    case 'Migrar':
+    case 'Atualizar':
         try{            
             if ( $frm->validate() ) {
                 $idmin = $frm->getFieldValue('IDMIN');

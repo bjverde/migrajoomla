@@ -246,12 +246,17 @@ class J3ContentDAO extends TPDOConnection {
 				WHERE  1=1 ";
 		$sql = !empty($idmin)?$sql." and co.id >= ".$idmin:$sql.'';
 		$sql = !empty($idmax)?$sql." and co.id <= ".$idmax:$sql.'';
-		$sql = $sql."order by jc.modified";
+		$sql = $sql." order by co.id";
 	    return $sql;
 	}
 	public static function selectSelectStates( $idmin, $idmax ) {
-	    parent::connect(null,true,null,null);
-	    $sql = self::selectSelectStates( $idmin, $idmax );
+	    $configFile    = null;
+	    $boolRequired  = true;
+	    $boolUtfDecode = null;
+	    $configArray   = self::getInfoConnect();
+	    parent::connect($configFile,$boolRequired,$boolUtfDecode,$configArray);
+	    
+	    $sql = self::getSqlSelectStates( $idmin, $idmax );
 	    $result = self::executeSql($sql);
 	    return $result;
 	}	    
