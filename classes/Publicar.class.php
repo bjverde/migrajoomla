@@ -4,27 +4,36 @@ class Publicar {
 	public function __construct(){
 	}
 	
-	public static function msgAcaoMateriaSucesso( $listIdsArtigos,$listArtigosAtualizar,$listArtigosIguais ){	    
+	public static function getListHtml( $lista ){
+	    $listaHtml = null;
+	    foreach ( $lista as $valeu ) {
+	        $listaHtml = $listaHtml.'
+                          <li>'.$valeu.'</li>';
+	    }
+	    return $listaHtml;
+	}
+	
+	public static function msgAcaoMateriaSucesso( $listIdsArtigos,$listArtigosAtualizar,$listArtigosIguais ,$listArtigosNaoExisteJ1 ){	    
 	    $result = null;
 	    if( count($listArtigosIguais) == 0 ){
 	        $qtd = count($listIdsArtigos);
 	        $result = 'Todos os artigos '.$qtd.' atualisados com sucesso !!';
 	    }else{
-	        $idFalhas = null;
-	        foreach ($listArtigosAtualizar as $valeu) {
-	            $idFalhas = $idFalhas.'
-                          <li>'.$valeu.'</li>';
-	        }
+	        $idFalhas = self::getListHtml( $listArtigosAtualizar );
+	        $idJ3     = self::getListHtml( $listArtigosNaoExisteJ1 );
 	        $qtd      = count($listIdsArtigos);
 	        $qtdOK    = count($listArtigosAtualizar);
 	        $qtdFalha = count($listArtigosIguais);
-	        $result   = 'Qtd de artigos solicitados:'.$qtd
+	        $resultJs = 'Qtd de artigos solicitados:'.$qtd
 	                 .'; Qtd de artigos NÃO atualizados:'.$qtdFalha
 	                 .'; Qtd de artigos atualizados:'.$qtdOK;
 					 //.'. Lista dos id com atualizados: '.$idFalhas;
-	        echo $result.';Lista dos id Atualizados <ul>: '.$idFalhas.'</ul>';
+	        $result = $resultJs.'<br><br>Lista dos id Atualizados <ul>: '.$idFalhas.'</ul>';
+	        $result = $result.'<br><br>Lista dos id que existem apenas no Joomla 3<ul>: '.$idJ3.'</ul>';
+	        
+	        echo $result;
 	    }
-	    return $result;
+	    return $resultJs;
 	}
 	//--------------------------------------------------------------------------------
 	public static function artigosAtualizarPublicacao( $idmin, $idmax ){
@@ -44,18 +53,23 @@ class Publicar {
 	        if( !in_array($value, $artigosStateJ1['ID']) ){
 	            $listArtigosNaoExisteJ1[] = $value;
 	        }else{
-	            $keyJ1 = array_search($value, $artigosStateJ1);
+	            $keyJ1 = array_search($value, $artigosStateJ1['ID']);
     	        $idIgual    = ( $artigosStateJ3['J3_ID'][$key] === $artigosStateJ1['ID'][$keyJ1] );
     	        $stateIgual = ( $artigosStateJ3['J3_STATE'][$key] === $artigosStateJ1['STATE'][$keyJ1] );
     	        if( $idIgual && $stateIgual){
     	            $listArtigosIguais[]=$value;
     	        }else{
     	            $listArtigosAtualizar[]=$value;
+    	            $id = $value;
+    	            $state = $artigosStateJ1['STATE'][$keyJ1];
+    	            J3ContentDAO::updateState( $id ,$state );
     	        }
 	        }
 	    }
-	    d( $listArtigosNaoExisteJ1 );
-	    $result = self::msgAcaoMateriaSucesso($listIdsArtigos,$listArtigosAtualizar,$listArtigosIguais);
+	    $result = self::msgAcaoMateriaSucesso($listIdsArtigos
+	                                         ,$listArtigosAtualizar
+	                                         ,$listArtigosIguais
+	                                         ,$listArtigosNaoExisteJ1);
 	    return $result;
 	}
 }

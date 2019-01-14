@@ -259,6 +259,29 @@ class J3ContentDAO extends TPDOConnection {
 	    $sql = self::getSqlSelectStates( $idmin, $idmax );
 	    $result = self::executeSql($sql);
 	    return $result;
-	}	    
+	}
+	//--------------------------------------------------------------------------------
+	public static function updateState ( $id, $state ) {
+	    if( !is_numeric($id) ){
+	        throw new DomainException('Id não numero informado');
+	    }
+	    
+	    if( !is_numeric($state) ){
+	        throw new DomainException('Id: '.$id.'. State não informado');
+	    }
+	    
+	    $configFile    = null;
+	    $boolRequired  = true;
+	    $boolUtfDecode = null;
+	    $configArray   = self::getInfoConnect();
+	    parent::connect($configFile,$boolRequired,$boolUtfDecode,$configArray);
+	    
+	    $values = array( $state, $id );
+	    $sql = 'update intranet.j38m_content set
+    				   state = ?
+    			 where id = ?';
+	    $result = self::executeSql($sql,$values);
+	    return $result;
+	}
 }
 ?>
