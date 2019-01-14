@@ -12,6 +12,10 @@ $msgSysNameVersion = SYSTEM_NAME.' - v'.SYSTEM_VERSION;
 </head>
 <body>
     <h2><?php echo($msgSysNameVersion); ?></h2>
+    <li>versão 1.4.0 - 14/01/2019</li>
+        <ul>
+            <li>Tela para atulizar o status</li>
+        </ul>      
     <li>versão 1.3.1 - 05/11/2018</li>
         <ul>
             <li>Bug migração inclusão</li>
