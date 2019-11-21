@@ -1,5 +1,5 @@
 # migrajoomla
-FormDin para Migrar artigos do Joomla 
+Sistema FormDin para facilitar a migração dados do Joomla antigo para o nova versão do sistema Novo
 
 ## Branch
 * master = migra Joomla 2.5.8 para 3.9
