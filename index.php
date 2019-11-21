@@ -17,7 +17,8 @@ require_once('includes/config_conexao.php');
 
 //FormDin version: 4.2.5
 require_once('../base/classes/webform/TApplication.class.php');
-require_once('classes/autoload_educ.php');
+require_once('controllers/autoload_migrajoomla.php');
+require_once('dao/autoload_migrajoomla_dao.php');
 
 
 $app = new TApplication(); // criar uma instancia do objeto aplicacao
@@ -29,7 +30,6 @@ $app->setUnit('Secretaria de Tecnologia da Informação - STI - (2018)');
 
 
 //Para testar com outro login basta informar o login desejado
-//define('SYSTEM_USER' , 'pedro.correa');
 define('SYSTEM_USER' , ServerHelper::get('PHP_AUTH_USER'));
 $app->setLoginInfo(SYSTEM_USER);
 //Acesso::usuarioAutorizado(SYSTEM_USER);
@@ -39,11 +39,6 @@ $app->setMainMenuFile('includes/menu.php');
 $app->setImgLogoPath('images/logo_mpdft.png');
 $app->setWaterMark('images/bg_transparencia.jpg');
 
-/*
-if( Acesso::isPerfilGeral() ){
-    $app->setDefaultModule('dados_pessoais.php');
-}
-*/
 
 $app->run();
 ?>

@@ -10,9 +10,9 @@
  * System educ created in: 2018-06-27 11:06:14
  */
 
-if ( !function_exists( 'educ_autoload') ) {
-	function educ_autoload( $class_name )	{
+if ( !function_exists( 'migrajoomla_autoload') ) {
+	function migrajoomla_autoload( $class_name )	{
 		require_once $class_name . '.class.php';
 	}
-spl_autoload_register('educ_autoload');
+spl_autoload_register('migrajoomla_autoload');
 }
