@@ -17,8 +17,11 @@ if( $ambiente == 'produção' || $ambiente == 'producao' ) {
 define('SYSTEM_NAME'    , 'Migração do Joomla');
 define('SYSTEM_NAME_SUB', $ambiente);
 define('SYSTEM_ACRONYM' , 'migraj');
-define('SYSTEM_VERSION' , '1.4.0');
+define('SYSTEM_VERSION' , '2.0.0');
 define('APLICATIVO'     , SYSTEM_ACRONYM);
+
+define('FORMDIN_VERSION_MIN_VERSION', '4.7.8');
+
 if ( !defined('DS') ){ define('DS'   , DIRECTORY_SEPARATOR); }
 
 ?>
