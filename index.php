@@ -10,7 +10,7 @@
  * System educ created in: 2018-06-27 11:06:14
  */
 //Constantes e configurações
-require_once('classes/ServidorConfig.class.php');
+require_once('controllers/ServidorConfig.class.php');
 
 require_once('includes/constantes.php');
 require_once('includes/config_conexao.php');
