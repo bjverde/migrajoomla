@@ -7,7 +7,7 @@
  * SysGen  Version: 0.8.0-alpha
  * FormDin Version: 4.2.5-alpha
  * 
- * System educ created in: 2018-06-27 11:06:14
+ * System educ created in: 2019-11-21 18:000
  */
 
 if ( !function_exists( 'migrajoomla_autoload') ) {
