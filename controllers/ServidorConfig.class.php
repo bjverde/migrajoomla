@@ -1,20 +1,18 @@
 <?php
 
 if ( !defined('DS') ){ define('DS'   , DIRECTORY_SEPARATOR); }
-class ServidorConfig {
+class ServidorConfig 
+{
+    const NOME_ARQUIVO_CONFIG = 'migrajoomla.ini';
+    const DATABASE = 'database';
+
     /**
      * Contém uma instância de ServidorConfig para implementação do padrão GoF Singleton.
      */
     private static $instancia = null;
     
-    private $perfilAcesso = array();
-    private $perfilAdm = array();
-    
-    /**
-     * Contém o nome do driver PDO para conexão com o SQL Server de acordo com o sistema operacional.
-     * @var string
-     */
-    private $driverPDO = '';
+    private $perfilJ25 = array();
+    private $perfilJ39 = array();
     
     private $config = array();
     
@@ -24,25 +22,23 @@ class ServidorConfig {
      */
     private function __construct() {
         $root     = $_SERVER['DOCUMENT_ROOT'];
-        $nome_ini = 'migrajoomla.ini';
-        $ini_path = $root .DS. 'config' . DS . $nome_ini;
+        $ini_path = $root .DS.'config'.DS.self::NOME_ARQUIVO_CONFIG;
         $ini_conf = null;
         if(file_exists($ini_path)){
             $ini_conf = parse_ini_file($ini_path, true);
         }else{ 
-            throw new InvalidArgumentException('Arquivo '.$nome_ini.' não encontrado');
+            throw new InvalidArgumentException('Arquivo '.self::NOME_ARQUIVO_CONFIG.' não encontrado');
         }
         
-        foreach($ini_conf as &$conf) {
-            if(!empty($conf['database'])) {
-                $conf['database'] = strtoupper($conf['database']);
+        foreach ( $ini_conf as &$conf ){
+            if ( !empty($conf[self::DATABASE]) ){
+                $conf[self::DATABASE] = strtoupper($conf[self::DATABASE]);
             }
         }
         
-        $this->perfilAcesso      = $ini_conf['ds-acesso'];
-        $this->perfilAdm         = $ini_conf['ds-adm'];
+        $this->perfilJ25         = $ini_conf['ds-j25'];
+        $this->perfilJ39         = $ini_conf['ds-j39'];
         $this->config 			 = $ini_conf['config'];
-        $this->driverPDO         = $this->config['drive'];
     }
     
     /**
@@ -63,30 +59,12 @@ class ServidorConfig {
         return self::$instancia;
     }
     
-    /**
-     * Retorna o nome do driver PDO para conexão com o SQL Server de acordo com o sistema operacional.
-     * @var string
-     */
-    public function getDriverPDO() {
-        return $this->driverPDO;
+    public function getPerfilJ25() {
+        return $this->perfilJ25;
     }
-    
-    public function getPerfilAcesso() {
-        return $this->perfilAcesso;
-    }
-    
-    /**
-     * Retorna um array associativo contendo dados de configuração para acesso ao banco de dados. As chaves desse array são:
-     * <ul>
-     * <li>hostname</li>
-     * <li>database</li>
-     * <li>username</li>
-     * <li>password</li>
-     * </ul>
-     * @var array
-     */
-    public function getPerfilAdm() {
-        return $this->perfilAdm;
+
+    public function getPerfilJ39() {
+        return $this->perfilJ39;
     }
     
     public function getConfig(){

@@ -10,7 +10,7 @@
  * System educ created in: 2018-06-27 11:06:14
  */
 
-$perfilBancoAdm  = ServidorConfig::getInstancia()->getPerfilAdm();
+$perfilBancoAdm  = ServidorConfig::getInstancia()->getPerfilJ25();
 
 define('BANCO'   , $perfilBancoAdm['banco']);
 define('HOST'    , $perfilBancoAdm['hostname']);
