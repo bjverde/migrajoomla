@@ -9,7 +9,7 @@
  * 
  * System migraj created in: 2019-11-22 19:19:23
  */
-class J36_categoriesDAO 
+class J39_categoriesDAO 
 {
 
     private static $sqlBasicSelect = 'select

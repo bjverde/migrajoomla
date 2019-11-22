@@ -9,7 +9,7 @@
  * 
  * System migraj created in: 2019-11-22 18:12:06
  */
-class J36_contentVO
+class J39_contentVO
 {
     private $id = null;
     private $asset_id = null;
