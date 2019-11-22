@@ -316,6 +316,23 @@ class J39_contentDAO
         return $vo;
     }
     //--------------------------------------------------------------------------------
+    public function selectByIdMigrator( $id ) {
+        FormDinHelper::validateIdIsNumeric($id,__METHOD__,__LINE__);
+        $values = array( $id );
+        $sql = "SELECT jc.id as j3_id
+            		,jc.title as j3_title
+            		,jc.alias as j3_alias
+            		,jc.introtext as j3_introtext
+            		,jc.fulltext as j3_fulltext
+            		,jc.created as j3_created
+            		,jc.modified as j3_modified
+        		FROM portal.j36_content as jc
+        		WHERE  jc.id = ?
+        		order by jc.id";
+        $result = $this->tpdo->executeSql($sql,$values);
+        return $result;
+    }    
+    //--------------------------------------------------------------------------------
     public function getSQLUltimoArtigoJ3() {
         $sql = "SELECT max(jc.id) as id FROM portal.j36_content as jc;";
         return $sql;
@@ -324,7 +341,7 @@ class J39_contentDAO
     public function getUltimoArtigo() {
         $sql = $this->getSQLUltimoArtigoJ3();
         $result = $this->tpdo->executeSql($sql);
-        $result = $this->selectById( $result['ID'][0] );
+        $result = $this->selectByIdMigrator( $result['ID'][0] );
         return $result;
     }
 }
