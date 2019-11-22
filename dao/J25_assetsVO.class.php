@@ -9,7 +9,7 @@
  * 
  * System migraj created in: 2019-11-22 19:23:21
  */
-class J16_assetsVO
+class J25_assetsVO
 {
     private $id = null;
     private $parent_id = null;

@@ -9,7 +9,7 @@
  * 
  * System migraj created in: 2019-11-22 19:23:22
  */
-class J16_usersVO
+class J25_usersVO
 {
     private $id = null;
     private $name = null;

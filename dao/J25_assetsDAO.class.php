@@ -9,7 +9,7 @@
  * 
  * System migraj created in: 2019-11-22 19:23:21
  */
-class J16_assetsDAO 
+class J25_assetsDAO 
 {
 
     private static $sqlBasicSelect = 'select
