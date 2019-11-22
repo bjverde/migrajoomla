@@ -13,15 +13,15 @@ $frm->addDateField('DATINICIAL','Data Inicial',true);
 $frm->addDateField('DATFINAL','Data final',false,false);
 
 $frm->addHtmlField('grideArtigosJ3',gerarGrideArtigosJ3());
-$frm->addMemoField('sqlArtigosJ3', 'SQL Artigos do Joomla 3.8',4000,false,120,5,null,true,null,J3ContentDAO::getSQLUltimoArtigoModificadoJ3());
+$frm->addMemoField('sqlArtigosJ3', 'SQL Artigos do '.J39,4000,false,120,5,null,true,null,J3ContentDAO::getSQLUltimoArtigoModificadoJ3());
 
 $frm->addButton('Pesquisar', null, 'Pesquisar', null, null, true, false);
 $frm->addButton('Migrar', null, 'Migrar', null, null, false, false);
 $frm->addButton('Limpar', null, 'Limpar', null, null, false, false);
 
-$frm->addGroupField('gpArtigos','Banco Joomla 1.5.14 - origem dos dados ',null,null,null,null,true,null,false)->setcloseble(true);
+$frm->addGroupField('gpArtigos','Banco '.J25.' - origem dos dados ',null,null,null,null,true,null,false)->setcloseble(true);
 $frm->addHtmlField('grideArtigos',$grideArtigos);
-$frm->addMemoField('sqlArtigos', 'SQL Artigos do Joomla 1',4000,false,120,5,null,true);
+$frm->addMemoField('sqlArtigos', 'SQL Artigos do Joomla '.J25,4000,false,120,5,null,true);
 $frm->closeGroup();
 
 
