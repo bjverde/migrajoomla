@@ -33,7 +33,7 @@ class Migrar {
 	    return $idUsersJ3;
 	}
 	//--------------------------------------------------------------------------------
-	public static function artigosAtualizar( $listIdsArtigos ){
+	public function artigosAtualizar( $listIdsArtigos ){
 	    if( !is_array($listIdsArtigos) ){
 	        throw new DomainException('Selecione os itens que deseja migrar');
 	    }
