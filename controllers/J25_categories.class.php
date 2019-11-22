@@ -52,7 +52,7 @@ class J25_categories
         return $result;
     }
     //--------------------------------------------------------------------------------
-    public function save( J16_categoriesVO $objVo )
+    public function save( J25_categoriesVO $objVo )
     {
         $result = null;
         if( $objVo->getId() ) {

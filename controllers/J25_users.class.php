@@ -52,7 +52,7 @@ class J16_users
         return $result;
     }
     //--------------------------------------------------------------------------------
-    public function save( J16_usersVO $objVo )
+    public function save( J25_usersVO $objVo )
     {
         $result = null;
         if( $objVo->getId() ) {

@@ -52,7 +52,7 @@ class J25_content
         return $result;
     }
     //--------------------------------------------------------------------------------
-    public function save( J16_contentVO $objVo )
+    public function save( J25_contentVO $objVo )
     {
         $result = null;
         if( $objVo->getId() ) {

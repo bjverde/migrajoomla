@@ -52,7 +52,7 @@ class J25_assets
         return $result;
     }
     //--------------------------------------------------------------------------------
-    public function save( J16_assetsVO $objVo )
+    public function save( J25_assetsVO $objVo )
     {
         $result = null;
         if( $objVo->getId() ) {
