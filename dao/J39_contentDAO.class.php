@@ -18,7 +18,7 @@ class J39_contentDAO
                                      ,title
                                      ,alias
                                      ,introtext
-                                     ,fulltext
+                                     ,`fulltext`
                                      ,state
                                      ,catid
                                      ,created
@@ -52,7 +52,15 @@ class J39_contentDAO
     {
         FormDinHelper::validateObjTypeTPDOConnectionObj($tpdo,__METHOD__,__LINE__);
         if( empty($tpdo) ){
+            $perfilBancoJ39  = ServidorConfig::getInstancia()->getPerfilJ39();
             $tpdo = New TPDOConnectionObj();
+            $tpdo->setDBMS(DBMS_MYSQL);
+            $tpdo->setHost($perfilBancoJ39['HOST']);
+            $tpdo->setPort($perfilBancoJ39['PORT']);
+            $tpdo->setDataBaseName($perfilBancoJ39['DATABASE']);
+            $tpdo->setUsername($perfilBancoJ39['USERNAME']);
+            $tpdo->setPassword($perfilBancoJ39['PASSWORD']);
+            $tpdo->connect(null,true,null,null);
         }
         $this->setTPDOConnection($tpdo);
     }
@@ -149,7 +157,7 @@ class J39_contentDAO
         return $result;
     }
     //--------------------------------------------------------------------------------
-    public function insert( J36_contentVO $objVo )
+    public function insert( J39_contentVO $objVo )
     {
         $values = array(  $objVo->getAsset_id() 
                         , $objVo->getTitle() 
@@ -187,7 +195,7 @@ class J39_contentDAO
                                 ,title
                                 ,alias
                                 ,introtext
-                                ,fulltext
+                                ,`fulltext`
                                 ,state
                                 ,catid
                                 ,created
@@ -219,7 +227,7 @@ class J39_contentDAO
         return intval($result);
     }
     //--------------------------------------------------------------------------------
-    public function update ( J36_contentVO $objVo )
+    public function update ( J39_contentVO $objVo )
     {
         $values = array( $objVo->getAsset_id()
                         ,$objVo->getTitle()
@@ -303,9 +311,21 @@ class J39_contentDAO
         $result = $this->selectById( $id );
         $result = \ArrayHelper::convertArrayFormDin2Pdo($result,false);
         $result = $result[0];
-        $vo = new J36_contentVO();
+        $vo = new J39_contentVO();
         $vo = \FormDinHelper::setPropertyVo($result,$vo);
         return $vo;
+    }
+    //--------------------------------------------------------------------------------
+    public function getSQLUltimoArtigoJ3() {
+        $sql = "SELECT max(jc.id) as id FROM portal.j36_content as jc;";
+        return $sql;
+    }
+    //--------------------------------------------------------------------------------
+    public function getUltimoArtigo() {
+        $sql = $this->getSQLUltimoArtigoJ3();
+        $result = $this->tpdo->executeSql($sql);
+        $result = $this->selectById( $result['ID'][0] );
+        return $result;
     }
 }
 ?>

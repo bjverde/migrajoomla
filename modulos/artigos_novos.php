@@ -12,15 +12,16 @@ $frm->setMaximize(true);
 $frm->addDateField('DATINICIAL','Data Inicial',true);
 $frm->addDateField('DATFINAL','Data final',false,false);
 
+
 $frm->addHtmlField('grideArtigosJ3',gerarGrideArtigosJ3());
-$frm->addMemoField('sqlArtigosJ3', 'SQL Artigos do Joomla 3.8',4000,false,120,5,null,true,null,J3ContentDAO::getSQLUltimoArtigoJ3());
+$frm->addMemoField('sqlArtigosJ3', 'SQL Artigos do '.J39,4000,false,120,5,null,true,null,J3ContentDAO::getSQLUltimoArtigoJ3());
 
 $frm->addButton('Pesquisar', null, 'Pesquisar', null, null, true, false);
 $frm->addButton('Incluir', null, 'Incluir', null, null, false, false);
 $frm->addButton('Limpar', null, 'Limpar', null, null, false, false);
 
 
-$frm->addGroupField('gpArtigos','Banco Joomla 1.5.14 - origem dos dados',null,null,null,null,true,null,false)->setcloseble(true);
+$frm->addGroupField('gpArtigos','Banco '.J25.' - origem dos dados',null,null,null,null,true,null,false)->setcloseble(true);
     $frm->addHtmlField('grideArtigos',$grideArtigos);
     $frm->addMemoField('sqlArtigos', 'SQL Artigos',4000,false,120,5);
 $frm->closeGroup();
@@ -84,8 +85,9 @@ $frm->addHtmlField('gride');
 $frm->show();
 
 function gerarGrideArtigosJ3() {
-    $dados = Relatorios::getUltimosArtigosJ3();
-    $gride = gerarGrideSimples( 'gdArtigoJ3', 'Último artigo incluído no Joomla 3.8' ,$dados );
+    $controllers = new Relatorios();
+    $dados = $controllers->getUltimosArtigosJ3();
+    $gride = gerarGrideSimples( 'gdArtigoJ3', 'Último artigo incluído no '.J39 ,$dados );
     return $gride;
 }
 

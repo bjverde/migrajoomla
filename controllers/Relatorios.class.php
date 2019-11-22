@@ -103,8 +103,10 @@ class Relatorios {
 	    return $result;
 	}
 	
-	public static function getUltimosArtigosJ3() {
-	    $result = J3ContentDAO::getUltimoArtigo();
+	public function getUltimosArtigosJ3() {
+		$controllers = new J39_content();
+		$result = $controllers->getUltimoArtigo();
+	    //$result = J3ContentDAO::getUltimoArtigo();
 	    $dados = array();
 	    $dados['ID'][0]=$result['J3_ID'][0];
 	    $dados['TITLE'][0]=self::trataArtigosLinkJ3( $result['J3_ID'][0], $result['J3_TITLE'][0] );
@@ -113,7 +115,9 @@ class Relatorios {
 	    return $dados;
 	}
 	
-	public static function getUltimoArtigoModificadoJ3() {
+	public function getUltimoArtigoModificadoJ3() {
+		//$controllers = new J39_content();
+		//$result = $controllers->getUltimoArtigo();		
 	    $result = J3ContentDAO::getUltimoArtigoModificadoJ3();
 	    $dados = array();
 	    $dados['ID'][0]=$result['J3_ID'][0];

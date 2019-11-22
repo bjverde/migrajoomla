@@ -74,6 +74,12 @@ class J39_content
         $result = $this->dao->getVoById( $id );
         return $result;
     }
+    //--------------------------------------------------------------------------------
+    public function getUltimoArtigo()
+    {
+        $result = $this->dao->getUltimoArtigo();
+        return $result;
+    }    
 
 }
 ?>
