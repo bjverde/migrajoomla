@@ -14,7 +14,7 @@ class Relatorios {
 	private function trataArtigosLinkJoomlaAntigo( $dadosArtigos ){
 	    if( isset($dadosArtigos) ){
 	        foreach ($dadosArtigos['J1_TITLE'] as $key => $value) {
-	            $link = '<a href="https://intranet.mpdft.mp.br/portal/administrator/index.php?option=com_content&sectionid=-1&task=edit&cid[]='.$dadosArtigos['J1_ID'][$key].'" target="_blank">'.$value.'</a>';
+	            $link = '<a href="http://www.mpdft.mp.br/portal/administrator/index.php?option=com_content&view=article&layout=edit&id='.$dadosArtigos['J1_ID'][$key].'" target="_blank">'.$value.'</a>';
 	            $dadosArtigos['J1_TITLE'][$key] = $link;
 	        }
 	    }
@@ -24,8 +24,8 @@ class Relatorios {
 	private function formataArtigosNovos( $daoJ25, $datIncial ,$datFim ){
 	    $dadosArtigos = $daoJ25->selectNovos($datIncial,$datFim);
 	    $dadosArtigos = self::incluirDadosJ3($dadosArtigos, 'I');
-	    //$result = $this->trataArtigosLinkJoomlaAntigo($dadosArtigos);
-	    return $dadosArtigos;
+	    $result = $this->trataArtigosLinkJoomlaAntigo($dadosArtigos);
+	    return $result;
 	}
 	
 	public function getNovosRegistros( $datIncial ,$datFim ){
