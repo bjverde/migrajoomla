@@ -325,5 +325,33 @@ class J25_contentDAO
         $vo = \FormDinHelper::setPropertyVo($result,$vo);
         return $vo;
     }
+	//--------------------------------------------------------------------------------
+    private static function getCampoData( $campo, $datInicio, $datFim ) {
+        $stringCampo = null;
+        if( empty($datFim) ){
+            $stringCampo = "jc.".$campo." > '".$datInicio." 00:00:00' ";
+        }else{
+            $stringCampo = "( jc.".$campo." BETWEEN '".$datInicio." 00:00:00' AND '".$datFim." 23:59:59' )";
+        }        
+        return $stringCampo;
+    }
+	//--------------------------------------------------------------------------------
+	public function getSqlSelectNovos( $datInicio, $datFim ) {
+	    $sql = "SELECT jc.id as j1_id
+            		,jc.title as j1_title
+            		,jc.created as j1_created
+            		,CASE WHEN ".self::getCampoData('created', $datInicio, $datFim)." THEN 'SIM' ELSE '' END as criterio_created
+            		,jc.publish_up as j1_publish_up
+            		,jc.modified
+        		FROM joomlainternet.j16_content as jc
+        		WHERE  ".self::getCampoData('created', $datInicio, $datFim)."
+        		order by jc.created";
+	    return $sql;
+	}
+	public function selectNovos( $datInicio, $datFim ) {
+	    $sql = $this->getSqlSelectNovos($datInicio, $datFim);
+	    $result = $this->tpdo->executeSql($sql);
+	    return $result;
+	}    
 }
 ?>

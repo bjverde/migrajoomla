@@ -38,7 +38,8 @@ switch( $acao ) {
         if ( $frm->validate() ) {
             $datIncial = $frm->getFieldValue('DATINICIAL');
             $datFim = $frm->getFieldValue('DATFINAL');
-            $resultado = Relatorios::getNovosRegistros($datIncial,$datFim);
+            $controllers = new Relatorios();
+            $resultado = $controllers->getNovosRegistros($datIncial,$datFim);
             
             $artigos  = $resultado['CONTENT'];
             $usuarios = $resultado['USERS'];
