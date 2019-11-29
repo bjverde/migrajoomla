@@ -19,7 +19,7 @@ class J25_contentDAO
                                      ,alias
                                      ,title_alias
                                      ,introtext
-                                     ,fulltext
+                                     ,`fulltext`
                                      ,state
                                      ,sectionid
                                      ,mask

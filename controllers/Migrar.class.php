@@ -87,52 +87,48 @@ class Migrar {
 	    $listArtigosFalha = array();
 	    $listArtigosOK = array();
 	    foreach ($listIdsArtigos as $idJ1) {
-	        $artigoJ3 = array();
-	        $artigoJ1 = ContentDAO::selectArtigoById($idJ1);
-	        $idAssests = self::artigosIncluirAssests($artigoJ1);
+			$artigoJ3 = array();
 			
-			$artigoJ3['id']         = $artigoJ1['ID'][0];
-			$artigoJ3['asset_id']   = $idAssests;
-			$artigoJ3['title']      = empty($artigoJ1['TITLE'][0])?' ':$artigoJ1['TITLE'][0];
-			$artigoJ3['alias']      = empty($artigoJ1['ALIAS'][0])?' ':$artigoJ1['ALIAS'][0];
-			$artigoJ3['introtext']  = empty($artigoJ1['INTROTEXT'][0])?' ':$artigoJ1['INTROTEXT'][0];
-			$artigoJ3['fulltext']   = empty($artigoJ1['FULLTEXT'][0])?' ':$artigoJ1['FULLTEXT'][0];
-			$artigoJ3['state']      = empty($artigoJ1['STATE'][0])?' ':$artigoJ1['STATE'][0];
-			$artigoJ3['catid']      = 1019; //categoria migração
-			$artigoJ3['created']    = $artigoJ1['CREATED'][0];
-			$artigoJ3['created_by'] = self::getIdUserJ3ByIdJ1($artigoJ1['CREATED_BY'][0]);
-			$artigoJ3['created_by_alias'] = ' ';
-			$artigoJ3['modified']    = $artigoJ1['MODIFIED'][0];
-			$artigoJ3['modified_by'] = self::getIdUserJ3ByIdJ1($artigoJ1['MODIFIED_BY'][0]);
-			$artigoJ3['checked_out'] = 0;   //Valor padrão depois do redmigrator
-			$artigoJ3['checked_out_time'] = '0000-00-00 00:00:00'; //Valor padrão depois do redmigrator
-			$artigoJ3['publish_up']  = $artigoJ1['PUBLISH_UP'][0];
-			$artigoJ3['publish_down']= $artigoJ1['PUBLISH_DOWN'][0];
-			$artigoJ3['images']      = empty($artigoJ1['IMAGES'][0])?' ':$artigoJ1['IMAGES'][0];
-			$artigoJ3['urls']        = empty($artigoJ1['URLS'][0])?' ':$artigoJ1['URLS'][0];
-			$artigoJ3['attribs']     = '{"show_title":"","link_titles":"","show_intro":"","show_category":"","link_category":"","show_author":"","show_create_date":"","show_modify_date":"","show_print_icon":"","show_email_icon":"","show_parent_category":"","link_parent_category":"","link_author":"","show_publish_date":"","show_item_navigation":"","show_print_icons":"","show_icons":"","show_hits":"","show_noauth":"","alternative_readmore":"","article_layout":"","show_publishing_options":"","show_article_options":"","show_urls_images_backend":"","show_urls_images_frontend":"","list_show_hits":"","list_show_author":"","show_readmore":""}';
-			$artigoJ3['version']     = empty($artigoJ1['VERSION'][0])?' ':$artigoJ1['VERSION'][0];
-			$artigoJ3['ordering']    = 0;
-			$artigoJ3['metakey']     = ' ';
-			$artigoJ3['metadesc']    = ' ';
-			$artigoJ3['access']      = 1;
-			$artigoJ3['hits']        = 0;
-			$artigoJ3['metadata']    = '{"robots":"","author":"","tags":""}';
-			$artigoJ3['featured']    = 0;
-			$artigoJ3['language']    = '*';
-			$artigoJ3['xreference']  = ' ';
+			$daoContentJ25 = new J25_contentDAO();
+	        $artigoJ1 = $daoContentJ25->selectById($idJ1);
+	        //$idAssests = self::artigosIncluirAssests($artigoJ1);
+			$objVoJ39 = new J39_contentVO();
 
-			J3ContentDAO::insert($artigoJ3);
+			$objVoJ39->setId( $artigoJ1['ID'][0] );
+			$objVoJ39->setAsset_id( $artigoJ1['ID'][0] );
+			$objVoJ39->setTitle(empty($artigoJ1['TITLE'][0])?' ':$artigoJ1['TITLE'][0]);
+			$objVoJ39->setAlias(empty($artigoJ1['ALIAS'][0])?' ':$artigoJ1['ALIAS'][0]);
+			$objVoJ39->setIntrotext(empty($artigoJ1['INTROTEXT'][0])?' ':$artigoJ1['INTROTEXT'][0]);
+			$objVoJ39->setFulltext(empty($artigoJ1['FULLTEXT'][0])?' ':$artigoJ1['FULLTEXT'][0]);
+			$objVoJ39->setState(empty($artigoJ1['STATE'][0])?0:$artigoJ1['STATE'][0]);
+			$objVoJ39->setCatid($artigoJ1['CATID'][0]);
+			$objVoJ39->setCreated($artigoJ1['CREATED'][0]);
+			$objVoJ39->setCreated_by($artigoJ1['CREATED_BY'][0]);
+			$objVoJ39->setCreated_by_alias(empty($artigoJ1['CREATED_BY_ALIAS'][0])?' ':$artigoJ1['CREATED_BY_ALIAS'][0]);
+			$objVoJ39->setModified($artigoJ1['MODIFIED'][0]);
+			$objVoJ39->setModified_by($artigoJ1['MODIFIED_BY'][0]);
+			$objVoJ39->setChecked_out($artigoJ1['CHECKED_OUT'][0]);
+			$objVoJ39->setChecked_out_time($artigoJ1['CHECKED_OUT_TIME'][0]);
+			$objVoJ39->setPublish_up($artigoJ1['PUBLISH_UP'][0]);
+			$objVoJ39->setPublish_down($artigoJ1['PUBLISH_DOWN'][0]);
+			$objVoJ39->setImages(empty($artigoJ1['IMAGES'][0])?' ':$artigoJ1['IMAGES'][0]);
+			$objVoJ39->setUrls(empty($artigoJ1['URLS'][0])?' ':$artigoJ1['URLS'][0]);
+			$objVoJ39->setAttribs($artigoJ1['ATTRIBS'][0]);
+			$objVoJ39->setVersion($artigoJ1['VERSION'][0]);
+			$objVoJ39->setOrdering($artigoJ1['ORDERING'][0]);
+			$objVoJ39->setMetakey($artigoJ1['METAKEY'][0]);
+			$objVoJ39->setMetadesc($artigoJ1['METADESC'][0]);
+			$objVoJ39->setAccess($artigoJ1['ACCESS'][0]);
+			$objVoJ39->setHits($artigoJ1['HITS'][0]);
+			$objVoJ39->setMetadata($artigoJ1['METADATA'][0]);
+			$objVoJ39->setFeatured($artigoJ1['FEATURED'][0]);
+			$objVoJ39->setLanguage($artigoJ1['LANGUAGE'][0]);
+			$objVoJ39->setXreference($artigoJ1['XREFERENCE'][0]);
 
-	        /*
-	        if($temArtigo){
-	            $artigo = ContentDAO::selectArtigoById($idJ1);
-	            J3ContentDAO::update($artigo);
-	            $listArtigosOK[]=$idJ1;
-	        }else{
-	            $listArtigosFalha[]=$idJ1;
-	        }
-	        */
+			$daoJ39 = new J39_contentDAO();
+			//$daoJ39->insertMigracao($objVoJ39);
+
+
 	    }
 	    $result = self::msgAcaoMateriaSucesso($listIdsArtigos,$listArtigosOK,$listArtigosFalha);
 	    return $result;

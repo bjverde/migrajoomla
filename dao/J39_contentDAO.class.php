@@ -227,6 +227,77 @@ class J39_contentDAO
         return intval($result);
     }
     //--------------------------------------------------------------------------------
+    public function insertMigracao( J39_contentVO $objVo )
+    {
+        $values = array(  $objVo->setId()
+                        , $objVo->getAsset_id() 
+                        , $objVo->getTitle() 
+                        , $objVo->getAlias() 
+                        , $objVo->getIntrotext() 
+                        , $objVo->getFulltext() 
+                        , $objVo->getState() 
+                        , $objVo->getCatid() 
+                        , $objVo->getCreated() 
+                        , $objVo->getCreated_by() 
+                        , $objVo->getCreated_by_alias() 
+                        , $objVo->getModified() 
+                        , $objVo->getModified_by() 
+                        , $objVo->getChecked_out() 
+                        , $objVo->getChecked_out_time() 
+                        , $objVo->getPublish_up() 
+                        , $objVo->getPublish_down() 
+                        , $objVo->getImages() 
+                        , $objVo->getUrls() 
+                        , $objVo->getAttribs() 
+                        , $objVo->getVersion() 
+                        , $objVo->getOrdering() 
+                        , $objVo->getMetakey() 
+                        , $objVo->getMetadesc() 
+                        , $objVo->getAccess() 
+                        , $objVo->getHits() 
+                        , $objVo->getMetadata() 
+                        , $objVo->getFeatured() 
+                        , $objVo->getLanguage() 
+                        , $objVo->getXreference() 
+                        , $objVo->getNote() 
+                        );
+        $sql = 'insert into portal.j36_content(
+                                 id
+                                ,asset_id
+                                ,title
+                                ,alias
+                                ,introtext
+                                ,`fulltext`
+                                ,state
+                                ,catid
+                                ,created
+                                ,created_by
+                                ,created_by_alias
+                                ,modified
+                                ,modified_by
+                                ,checked_out
+                                ,checked_out_time
+                                ,publish_up
+                                ,publish_down
+                                ,images
+                                ,urls
+                                ,attribs
+                                ,version
+                                ,ordering
+                                ,metakey
+                                ,metadesc
+                                ,access
+                                ,hits
+                                ,metadata
+                                ,featured
+                                ,language
+                                ,xreference
+                                ,note
+                                ) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+        $result = $this->tpdo->executeSql($sql, $values);
+        return $result;
+    }    
+    //--------------------------------------------------------------------------------
     public function update ( J39_contentVO $objVo )
     {
         $values = array( $objVo->getAsset_id()
