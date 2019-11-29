@@ -205,5 +205,24 @@ class J25_usersDAO
         $vo = \FormDinHelper::setPropertyVo($result,$vo);
         return $vo;
     }
+    //--------------------------------------------------------------------------------
+    public function getSqlSelect( $dat ) {
+		
+		$sql = "SELECT ju.id
+                      ,ju.name
+                      ,ju.username
+                      ,ju.email
+                      ,ju.registerDate
+                 FROM ".J25_DB.'.'.J25_DBID."users ju 
+        		WHERE  ju.registerDate > '".$dat." 00:00:00'
+        		order by ju.id";
+		return $sql;
+    }
+    //--------------------------------------------------------------------------------
+    public function getUltimosUsuarios($dat) {
+        $sql = $this->getSqlSelect($dat);
+        $result = $this->tpdo->executeSql($sql);
+        return $result;
+    }
 }
 ?>

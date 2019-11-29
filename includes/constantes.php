@@ -17,6 +17,12 @@ if( $ambiente == 'produção' || $ambiente == 'producao' ) {
 define('J25'    , 'Joomla 2.5');
 define('J39'    , 'Joomla 3.9');
 
+define('J25_DB', 'joomlainternet');
+define('J25_DBID','j16_');
+define('J39_DB', 'joomlainternet');
+define('J39_DBID','j16_');
+
+
 define('SYSTEM_NAME'    , 'Migração do Joomla 2.5 para 3.9');
 define('SYSTEM_NAME_SUB', $ambiente);
 define('SYSTEM_ACRONYM' , 'migraj');

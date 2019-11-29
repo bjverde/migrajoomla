@@ -35,16 +35,15 @@ class Relatorios {
 	    $datIncial = DateTimeHelper::date2Mysql($datIncial);
 		$datFim = DateTimeHelper::date2Mysql($datFim);
 		
-		$daoJ25 = new J25_contentDAO();
+		$daoContentJ25 = new J25_contentDAO();
 
 	    $result = null;
-		$result['CONTENT']['SQL'] = $daoJ25->getSqlSelectNovos($datIncial,$datFim);
-	    $result['CONTENT']['RESULT'] = $this->formataArtigosNovos($daoJ25,$datIncial,$datFim);
+		$result['CONTENT']['SQL'] = $daoContentJ25->getSqlSelectNovos($datIncial,$datFim);
+	    $result['CONTENT']['RESULT'] = $this->formataArtigosNovos($daoContentJ25,$datIncial,$datFim);
 		
-		/*
-	    $result['USERS']['SQL'] = UsersDAO::getSqlSelect($datIncial);
-		$result['USERS']['RESULT'] = UsersDAO::selectAll($datIncial);
-		*/
+		$daoUsersJ25 = new J25_usersDAO ();
+	    $result['USERS']['SQL'] = $daoUsersJ25->getSqlSelect($datIncial);
+		$result['USERS']['RESULT'] = $daoUsersJ25->getUltimosUsuarios($datIncial);
 	    
 		return $result;
 	}	
