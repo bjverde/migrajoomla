@@ -90,12 +90,11 @@ class Migrar {
 			$artigoJ3 = array();
 			
 			$daoContentJ25 = new J25_contentDAO();
-	        $artigoJ1 = $daoContentJ25->selectById($idJ1);
-	        //$idAssests = self::artigosIncluirAssests($artigoJ1);
+			$artigoJ1 = $daoContentJ25->selectById($idJ1);
+			
 			$objVoJ39 = new J39_contentVO();
-
 			$objVoJ39->setId( $artigoJ1['ID'][0] );
-			$objVoJ39->setAsset_id( $artigoJ1['ID'][0] );
+			$objVoJ39->setAsset_id( $artigoJ1['ASSET_ID'][0] );
 			$objVoJ39->setTitle(empty($artigoJ1['TITLE'][0])?' ':$artigoJ1['TITLE'][0]);
 			$objVoJ39->setAlias(empty($artigoJ1['ALIAS'][0])?' ':$artigoJ1['ALIAS'][0]);
 			$objVoJ39->setIntrotext(empty($artigoJ1['INTROTEXT'][0])?' ':$artigoJ1['INTROTEXT'][0]);
@@ -108,7 +107,7 @@ class Migrar {
 			$objVoJ39->setModified($artigoJ1['MODIFIED'][0]);
 			$objVoJ39->setModified_by($artigoJ1['MODIFIED_BY'][0]);
 			$objVoJ39->setChecked_out($artigoJ1['CHECKED_OUT'][0]);
-			$objVoJ39->setChecked_out_time($artigoJ1['CHECKED_OUT_TIME'][0]);
+			$objVoJ39->setChecked_out_time(empty($artigoJ1['CHECKED_OUT_TIME'][0])?'':$artigoJ1['CHECKED_OUT_TIME'][0]);
 			$objVoJ39->setPublish_up($artigoJ1['PUBLISH_UP'][0]);
 			$objVoJ39->setPublish_down($artigoJ1['PUBLISH_DOWN'][0]);
 			$objVoJ39->setImages(empty($artigoJ1['IMAGES'][0])?' ':$artigoJ1['IMAGES'][0]);
@@ -125,10 +124,10 @@ class Migrar {
 			$objVoJ39->setLanguage($artigoJ1['LANGUAGE'][0]);
 			$objVoJ39->setXreference($artigoJ1['XREFERENCE'][0]);
 
+			d($objVoJ39);
+
 			$daoJ39 = new J39_contentDAO();
-			//$daoJ39->insertMigracao($objVoJ39);
-
-
+			$daoJ39->insertMigracao($objVoJ39);
 	    }
 	    $result = self::msgAcaoMateriaSucesso($listIdsArtigos,$listArtigosOK,$listArtigosFalha);
 	    return $result;

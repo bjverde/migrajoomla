@@ -229,7 +229,7 @@ class J39_contentDAO
     //--------------------------------------------------------------------------------
     public function insertMigracao( J39_contentVO $objVo )
     {
-        $values = array(  $objVo->setId()
+        $values = array(  $objVo->getId()
                         , $objVo->getAsset_id() 
                         , $objVo->getTitle() 
                         , $objVo->getAlias() 
@@ -261,7 +261,7 @@ class J39_contentDAO
                         , $objVo->getXreference() 
                         , $objVo->getNote() 
                         );
-        $sql = 'insert into portal.j36_content(
+        $sql = 'insert into '.J39_DB.'.'.J39_DBID.'content(
                                  id
                                 ,asset_id
                                 ,title
