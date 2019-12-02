@@ -111,8 +111,8 @@ class Relatorios {
 	}
 
 	public function getSQLUltimoArtigoJ3(){
-		$daoJ25 = new J25_contentDAO();
-		$result = $daoJ25->getSQLUltimoArtigoJ3();
+		$daoJ39 = new J39_contentDAO();
+		$result = $daoJ39->getSQLUltimoArtigoJ3();
 		return $result;
 	}
 	
