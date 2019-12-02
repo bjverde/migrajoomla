@@ -44,7 +44,7 @@ class J39_contentDAO
                                      ,language
                                      ,xreference
                                      ,note
-                                     from portal.j36_content ';
+                                     from '.J39_DB.'.'.J39_DBID.'content ';
 
     private $tpdo = null;
 
@@ -126,7 +126,7 @@ class J39_contentDAO
     public function selectCount( $where=null )
     {
         $where = $this->processWhereGridParameters($where);
-        $sql = 'select count(id) as qtd from portal.j36_content';
+        $sql = 'select count(id) as qtd from '.J39_DB.'.'.J39_DBID.'content';
         $sql = $sql.( ($where)? ' where '.$where:'');
         $result = $this->tpdo->executeSql($sql);
         return $result['QTD'][0];
@@ -190,7 +190,7 @@ class J39_contentDAO
                         , $objVo->getXreference() 
                         , $objVo->getNote() 
                         );
-        $sql = 'insert into portal.j36_content(
+        $sql = 'insert into '.J39_DB.'.'.J39_DBID.'content(
                                  asset_id
                                 ,title
                                 ,alias
@@ -331,7 +331,7 @@ class J39_contentDAO
                         ,$objVo->getXreference()
                         ,$objVo->getNote()
                         ,$objVo->getId() );
-        $sql = 'update portal.j36_content set 
+        $sql = 'update '.J39_DB.'.'.J39_DBID.'content set 
                                  asset_id = ?
                                 ,title = ?
                                 ,alias = ?
@@ -371,7 +371,7 @@ class J39_contentDAO
     {
         FormDinHelper::validateIdIsNumeric($id,__METHOD__,__LINE__);
         $values = array($id);
-        $sql = 'delete from portal.j36_content where id = ?';
+        $sql = 'delete from '.J39_DB.'.'.J39_DBID.'content where id = ?';
         $result = $this->tpdo->executeSql($sql, $values);
         return $result;
     }
@@ -390,22 +390,22 @@ class J39_contentDAO
     public function selectByIdMigrator( $id ) {
         FormDinHelper::validateIdIsNumeric($id,__METHOD__,__LINE__);
         $values = array( $id );
-        $sql = "SELECT jc.id as j3_id
+        $sql = 'SELECT jc.id as j3_id
             		,jc.title as j3_title
             		,jc.alias as j3_alias
             		,jc.introtext as j3_introtext
             		,jc.fulltext as j3_fulltext
             		,jc.created as j3_created
             		,jc.modified as j3_modified
-        		FROM portal.j36_content as jc
+        		FROM '.J39_DB.'.'.J39_DBID.'content as jc
         		WHERE  jc.id = ?
-        		order by jc.id";
+        		order by jc.id';
         $result = $this->tpdo->executeSql($sql,$values);
         return $result;
     }    
     //--------------------------------------------------------------------------------
     public function getSQLUltimoArtigoJ3() {
-        $sql = "SELECT max(jc.id) as id FROM portal.j36_content as jc;";
+        $sql = 'SELECT max(jc.id) as id FROM '.J39_DB.'.'.J39_DBID.'content as jc;';
         return $sql;
     }
     //--------------------------------------------------------------------------------
