@@ -12,9 +12,9 @@ $frm->setMaximize(true);
 $frm->addDateField('DATINICIAL','Data Inicial',true);
 $frm->addDateField('DATFINAL','Data final',false,false);
 
-
-$frm->addHtmlField('grideArtigosJ3',gerarGrideArtigosJ3());
-$frm->addMemoField('sqlArtigosJ3', 'SQL Artigos do '.J39,4000,false,120,5,null,true,null,J3ContentDAO::getSQLUltimoArtigoJ3());
+$controllersRelatorios = new Relatorios();
+$frm->addHtmlField('grideArtigosJ3',gerarGrideArtigosJ3($controllersRelatorios));
+$frm->addMemoField('sqlArtigosJ3', 'SQL Artigos do '.J39,4000,false,120,5,null,true,null,$controllersRelatorios->getSQLUltimoArtigoJ3());
 
 $frm->addButton('Pesquisar', null, 'Pesquisar', null, null, true, false);
 $frm->addButton('Incluir', null, 'Incluir', null, null, false, false);
@@ -85,9 +85,8 @@ switch( $acao ) {
 $frm->addHtmlField('gride');
 $frm->show();
 
-function gerarGrideArtigosJ3() {
-    $controllers = new Relatorios();
-    $dados = $controllers->getUltimosArtigosJ3();
+function gerarGrideArtigosJ3($controllersRelatorios) {
+    $dados = $controllersRelatorios->getUltimosArtigosJ3();
     $gride = gerarGrideSimples( 'gdArtigoJ3', 'Último artigo incluído no '.J39 ,$dados );
     return $gride;
 }
