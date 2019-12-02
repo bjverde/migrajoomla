@@ -5,6 +5,9 @@ Sistema FormDin para facilitar a migração dados do Joomla antigo para o nova v
 * master = migra Joomla 2.5.8 para 3.9
 * m1.5to3.x = migra Joomla 1.5.14 para 3.9
 
+## Requisito 
+* PHP 7.0 a 7.3
+* MySQL 5.5 a 5.6. Não recomendavel para versão 5.7
 
 # Como usar ?
 
