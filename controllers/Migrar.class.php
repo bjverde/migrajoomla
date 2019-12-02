@@ -39,17 +39,19 @@ class Migrar {
 	    }
 	    
 	    $listArtigosFalha = array();
-	    $listArtigosOK = array();
-	    foreach ($listIdsArtigos as $valeu) {	        
-	        $temArtigo = J3ContentDAO::temArtigoById($valeu);
-	        if($temArtigo){
-	            $artigo = ContentDAO::selectArtigoById($valeu);
-	            $artigo['CREATED_BY'][0]  = self::getIdUserJ3ByIdJ1($artigo['CREATED_BY'][0]);
-	            $artigo['MODIFIED_BY'][0] = self::getIdUserJ3ByIdJ1($artigo['MODIFIED_BY'][0]);
-	            J3ContentDAO::update($artigo);
-	            $listArtigosOK[]=$valeu;
+		$listArtigosOK = array();		
+	    foreach ($listIdsArtigos as $idArtigo) {
+			$daoJ39 = new J39_contentDAO();
+			$temArigo = $daoJ39->temArtigoById($idArtigo);
+	        if( $temArigo ){
+				$objVoJ39  = $daoJ39->getVoById($idArtigo);
+				$daoJ25 = new J25_contentDAO();
+				$artigoJ5 = $daoJ25->selectById($idArtigo);
+				$objVoJ39 = $this->setVoJ39( $objVoJ39, $artigoJ5 );
+				$daoJ39->update($objVoJ39);
+	            $listArtigosOK[]=$idArtigo;
 	        }else{
-	            $listArtigosFalha[]=$valeu;
+	            $listArtigosFalha[]=$idArtigo;
 	        }
 	    }    
 	    $result = self::msgAcaoMateriaSucesso($listIdsArtigos,$listArtigosOK,$listArtigosFalha);
@@ -78,8 +80,40 @@ class Migrar {
 	    }	    
 	    return $idAssests;
 	}
+	public function setVoJ39( J39_contentVO $objVoJ39, $artigoJ25 ){
+		$objVoJ39->setAsset_id( $artigoJ25['ASSET_ID'][0] );
+		$objVoJ39->setTitle(empty($artigoJ25['TITLE'][0])?' ':$artigoJ25['TITLE'][0]);
+		$objVoJ39->setAlias(empty($artigoJ25['ALIAS'][0])?' ':$artigoJ25['ALIAS'][0]);
+		$objVoJ39->setIntrotext(empty($artigoJ25['INTROTEXT'][0])?' ':$artigoJ25['INTROTEXT'][0]);
+		$objVoJ39->setFulltext(empty($artigoJ25['FULLTEXT'][0])?' ':$artigoJ25['FULLTEXT'][0]);
+		$objVoJ39->setState(empty($artigoJ25['STATE'][0])?0:$artigoJ25['STATE'][0]);
+		$objVoJ39->setCatid($artigoJ25['CATID'][0]);
+		$objVoJ39->setCreated($artigoJ25['CREATED'][0]);
+		$objVoJ39->setCreated_by($artigoJ25['CREATED_BY'][0]);
+		$objVoJ39->setCreated_by_alias(empty($artigoJ25['CREATED_BY_ALIAS'][0])?' ':$artigoJ25['CREATED_BY_ALIAS'][0]);
+		$objVoJ39->setModified($artigoJ25['MODIFIED'][0]);
+		$objVoJ39->setModified_by($artigoJ25['MODIFIED_BY'][0]);
+		$objVoJ39->setChecked_out($artigoJ25['CHECKED_OUT'][0]);
+		$objVoJ39->setChecked_out_time(empty($artigoJ25['CHECKED_OUT_TIME'][0])?'':$artigoJ25['CHECKED_OUT_TIME'][0]);
+		$objVoJ39->setPublish_up($artigoJ25['PUBLISH_UP'][0]);
+		$objVoJ39->setPublish_down($artigoJ25['PUBLISH_DOWN'][0]);
+		$objVoJ39->setImages(empty($artigoJ25['IMAGES'][0])?' ':$artigoJ25['IMAGES'][0]);
+		$objVoJ39->setUrls(empty($artigoJ25['URLS'][0])?' ':$artigoJ25['URLS'][0]);
+		$objVoJ39->setAttribs($artigoJ25['ATTRIBS'][0]);
+		$objVoJ39->setVersion($artigoJ25['VERSION'][0]);
+		$objVoJ39->setOrdering($artigoJ25['ORDERING'][0]);
+		$objVoJ39->setMetakey(empty($artigoJ25['METAKEY'][0])?' ':$artigoJ25['METAKEY'][0]);
+		$objVoJ39->setMetadesc(empty($artigoJ25['METADESC'][0])?' ':$artigoJ25['METADESC'][0]);
+		$objVoJ39->setAccess($artigoJ25['ACCESS'][0]);
+		$objVoJ39->setHits($artigoJ25['HITS'][0]);
+		$objVoJ39->setMetadata($artigoJ25['METADATA'][0]);
+		$objVoJ39->setFeatured($artigoJ25['FEATURED'][0]);
+		$objVoJ39->setLanguage($artigoJ25['LANGUAGE'][0]);
+		$objVoJ39->setXreference(empty($artigoJ25['XREFERENCE'][0])?' ':$artigoJ25['XREFERENCE'][0]);
+		return $objVoJ39;
+	}
 	//--------------------------------------------------------------------------------
-	public static function artigosIncluir( $listIdsArtigos ){
+	public function artigosIncluir( $listIdsArtigos ){
 	    if( !is_array($listIdsArtigos) ){
 	        throw new DomainException('Selecione os itens que deseja incluir');
 	    }
@@ -92,37 +126,8 @@ class Migrar {
 			
 			$objVoJ39 = new J39_contentVO();
 			$objVoJ39->setId( $artigoJ1['ID'][0] );
-			$objVoJ39->setAsset_id( $artigoJ1['ASSET_ID'][0] );
-			$objVoJ39->setTitle(empty($artigoJ1['TITLE'][0])?' ':$artigoJ1['TITLE'][0]);
-			$objVoJ39->setAlias(empty($artigoJ1['ALIAS'][0])?' ':$artigoJ1['ALIAS'][0]);
-			$objVoJ39->setIntrotext(empty($artigoJ1['INTROTEXT'][0])?' ':$artigoJ1['INTROTEXT'][0]);
-			$objVoJ39->setFulltext(empty($artigoJ1['FULLTEXT'][0])?' ':$artigoJ1['FULLTEXT'][0]);
-			$objVoJ39->setState(empty($artigoJ1['STATE'][0])?0:$artigoJ1['STATE'][0]);
-			$objVoJ39->setCatid($artigoJ1['CATID'][0]);
-			$objVoJ39->setCreated($artigoJ1['CREATED'][0]);
-			$objVoJ39->setCreated_by($artigoJ1['CREATED_BY'][0]);
-			$objVoJ39->setCreated_by_alias(empty($artigoJ1['CREATED_BY_ALIAS'][0])?' ':$artigoJ1['CREATED_BY_ALIAS'][0]);
-			$objVoJ39->setModified($artigoJ1['MODIFIED'][0]);
-			$objVoJ39->setModified_by($artigoJ1['MODIFIED_BY'][0]);
-			$objVoJ39->setChecked_out($artigoJ1['CHECKED_OUT'][0]);
-			$objVoJ39->setChecked_out_time(empty($artigoJ1['CHECKED_OUT_TIME'][0])?'':$artigoJ1['CHECKED_OUT_TIME'][0]);
-			$objVoJ39->setPublish_up($artigoJ1['PUBLISH_UP'][0]);
-			$objVoJ39->setPublish_down($artigoJ1['PUBLISH_DOWN'][0]);
-			$objVoJ39->setImages(empty($artigoJ1['IMAGES'][0])?' ':$artigoJ1['IMAGES'][0]);
-			$objVoJ39->setUrls(empty($artigoJ1['URLS'][0])?' ':$artigoJ1['URLS'][0]);
-			$objVoJ39->setAttribs($artigoJ1['ATTRIBS'][0]);
-			$objVoJ39->setVersion($artigoJ1['VERSION'][0]);
-			$objVoJ39->setOrdering($artigoJ1['ORDERING'][0]);
-			$objVoJ39->setMetakey(empty($artigoJ1['METAKEY'][0])?' ':$artigoJ1['METAKEY'][0]);
-			$objVoJ39->setMetadesc(empty($artigoJ1['METADESC'][0])?' ':$artigoJ1['METADESC'][0]);
-			$objVoJ39->setAccess($artigoJ1['ACCESS'][0]);
-			$objVoJ39->setHits($artigoJ1['HITS'][0]);
-			$objVoJ39->setMetadata($artigoJ1['METADATA'][0]);
-			$objVoJ39->setFeatured($artigoJ1['FEATURED'][0]);
-			$objVoJ39->setLanguage($artigoJ1['LANGUAGE'][0]);
-			$objVoJ39->setXreference(empty($artigoJ1['XREFERENCE'][0])?' ':$artigoJ1['XREFERENCE'][0]);
 			$objVoJ39->setNote(' ');
-
+			$objVoJ39 = $this->setVoJ39( $objVoJ39, $artigoJ1 );
 			$daoJ39 = new J39_contentDAO();
 			$daoJ39->insertMigracao($objVoJ39);
 	    }

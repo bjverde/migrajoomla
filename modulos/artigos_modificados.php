@@ -52,7 +52,8 @@ switch( $acao ) {
             if(empty($listIdArtigos)){
                 $frm->setMessage('Selecione os itens que deseja migrar');
             }else{
-                $msg = Migrar::artigosAtualizar($listIdArtigos);
+                $controllers = new Migrar();
+                $msg = $controllers->artigosAtualizar($listIdArtigos);
                 $frm->setMessage( $msg );
             }
         }

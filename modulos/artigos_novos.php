@@ -64,7 +64,8 @@ switch( $acao ) {
             if(empty($listIdArtigos)){
                 $frm->setMessage('Selecione os itens que deseja incluir');
             }else{
-                $msg = Migrar::artigosIncluir($listIdArtigos);
+                $controllers = new Migrar();
+                $msg = $controllers->artigosIncluir($listIdArtigos);
                 $frm->setMessage( $msg );
             }
         }
