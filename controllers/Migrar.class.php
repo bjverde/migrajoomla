@@ -87,8 +87,6 @@ class Migrar {
 	    $listArtigosFalha = array();
 	    $listArtigosOK = array();
 	    foreach ($listIdsArtigos as $idJ1) {
-			$artigoJ3 = array();
-			
 			$daoContentJ25 = new J25_contentDAO();
 			$artigoJ1 = $daoContentJ25->selectById($idJ1);
 			
@@ -115,16 +113,15 @@ class Migrar {
 			$objVoJ39->setAttribs($artigoJ1['ATTRIBS'][0]);
 			$objVoJ39->setVersion($artigoJ1['VERSION'][0]);
 			$objVoJ39->setOrdering($artigoJ1['ORDERING'][0]);
-			$objVoJ39->setMetakey($artigoJ1['METAKEY'][0]);
-			$objVoJ39->setMetadesc($artigoJ1['METADESC'][0]);
+			$objVoJ39->setMetakey(empty($artigoJ1['METAKEY'][0])?' ':$artigoJ1['METAKEY'][0]);
+			$objVoJ39->setMetadesc(empty($artigoJ1['METADESC'][0])?' ':$artigoJ1['METADESC'][0]);
 			$objVoJ39->setAccess($artigoJ1['ACCESS'][0]);
 			$objVoJ39->setHits($artigoJ1['HITS'][0]);
 			$objVoJ39->setMetadata($artigoJ1['METADATA'][0]);
 			$objVoJ39->setFeatured($artigoJ1['FEATURED'][0]);
 			$objVoJ39->setLanguage($artigoJ1['LANGUAGE'][0]);
-			$objVoJ39->setXreference($artigoJ1['XREFERENCE'][0]);
-
-			d($objVoJ39);
+			$objVoJ39->setXreference(empty($artigoJ1['XREFERENCE'][0])?' ':$artigoJ1['XREFERENCE'][0]);
+			$objVoJ39->setNote(' ');
 
 			$daoJ39 = new J39_contentDAO();
 			$daoJ39->insertMigracao($objVoJ39);
