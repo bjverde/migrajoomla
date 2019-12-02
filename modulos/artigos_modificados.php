@@ -12,8 +12,9 @@ $frm->setMaximize(true);
 $frm->addDateField('DATINICIAL','Data Inicial',true);
 $frm->addDateField('DATFINAL','Data final',false,false);
 
-$frm->addHtmlField('grideArtigosJ3',gerarGrideArtigosJ3());
-$frm->addMemoField('sqlArtigosJ3', 'SQL Artigos do '.J39,4000,false,120,5,null,true,null,J3ContentDAO::getSQLUltimoArtigoModificadoJ3());
+$controllersRelatorios = new Relatorios();
+$frm->addHtmlField('grideArtigosJ3',gerarGrideArtigosJ3($controllersRelatorios));
+$frm->addMemoField('sqlArtigosJ3', 'SQL Artigos do '.J39,4000,false,120,5,null,true,null,$controllersRelatorios->getSQLUltimoArtigoModificadoJ3());
 
 $frm->addButton('Pesquisar', null, 'Pesquisar', null, null, true, false);
 $frm->addButton('Migrar', null, 'Migrar', null, null, false, false);
@@ -87,9 +88,9 @@ function gerarGrideArtigos( $gdId, $gdTitulo ,$dados ) {
     return $gride;
 }
 
-function gerarGrideArtigosJ3() {
-    $dados = Relatorios::getUltimoArtigoModificadoJ3();
-    $gride = gerarGrideSimples( 'gdArtigoJ3', 'Último artigo modificado no Joomla 3.8.13' ,$dados );
+function gerarGrideArtigosJ3($controllersRelatorios) {
+    $dados = $controllersRelatorios->getUltimoArtigoModificadoJ3();
+    $gride = gerarGrideSimples( 'gdArtigoJ3', 'Último artigo modificado no '.J39 ,$dados );
     return $gride;
 }
 

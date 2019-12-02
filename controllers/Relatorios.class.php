@@ -108,6 +108,12 @@ class Relatorios {
 	    
 	    return $result;
 	}
+
+	public function getSQLUltimoArtigoJ3(){
+		$controllers = new J39_contentDAO();
+		$result = $controllers->getSQLUltimoArtigoJ3();
+		return $result;
+	}
 	
 	public function getUltimosArtigosJ3() {
 		$daoJ39 = new J39_contentDAO();
@@ -121,10 +127,15 @@ class Relatorios {
 	    return $dados;
 	}
 	
+	public function getSQLUltimoArtigoModificadoJ3(){
+		$controllers = new J39_contentDAO();
+		$result = $controllers->getSQLUltimoArtigoModificadoJ3();
+		return $result;
+	}
+
 	public function getUltimoArtigoModificadoJ3() {
-		//$controllers = new J39_content();
-		//$result = $controllers->getUltimoArtigo();		
-	    $result = J3ContentDAO::getUltimoArtigoModificadoJ3();
+		$controllers = new J39_contentDAO();
+		$result = $controllers->getUltimoArtigoModificadoJ3();
 	    $dados = array();
 	    $dados['ID'][0]=$result['J3_ID'][0];
 	    $dados['TITLE'][0]=self::trataArtigosLinkJ3( $result['J3_ID'][0], $result['J3_TITLE'][0] );

@@ -415,5 +415,21 @@ class J39_contentDAO
         $result = $this->selectByIdMigrator( $result['ID'][0] );
         return $result;
     }
+    //--------------------------------------------------------------------------------
+    public static function getSQLUltimoArtigoModificadoJ3() {
+        $sql = 'SELECT jc.id FROM '.J39_DB.'.'.J39_DBID.'content as jc
+                where jc.modified = (SELECT max(jc1.modified) as id
+                                    FROM '.J39_DB.'.'.J39_DBID.'content as jc1
+                                    WHERE jc1.created <> jc1.modified
+                                    );';
+        return $sql;
+    }
+    //--------------------------------------------------------------------------------
+    public function getUltimoArtigoModificadoJ3() {
+        $sql = $this->getSQLUltimoArtigoModificadoJ3();
+        $result = $this->tpdo->executeSql($sql);
+        $result = $this->selectByIdMigrator( $result['ID'][0] );
+        return $result;
+    }    
 }
 ?>
