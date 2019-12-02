@@ -336,7 +336,7 @@ class J39_contentDAO
                                 ,title = ?
                                 ,alias = ?
                                 ,introtext = ?
-                                ,fulltext = ?
+                                ,`fulltext` = ?
                                 ,state = ?
                                 ,catid = ?
                                 ,created = ?
@@ -430,6 +430,17 @@ class J39_contentDAO
         $result = $this->tpdo->executeSql($sql);
         $result = $this->selectByIdMigrator( $result['ID'][0] );
         return $result;
-    }    
+    }
+    //--------------------------------------------------------------------------------
+    public function temArtigoById( $id ) {
+        $result = false;
+        $dados = $this->selectByIdMigrator($id);
+        if( is_array($dados) ){
+            if ( $dados['J3_ID'][0] == $id ){
+                $result = true;
+            }
+        }
+        return $result;
+    }
 }
 ?>

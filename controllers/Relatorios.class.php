@@ -79,7 +79,7 @@ class Relatorios {
 	                    if( empty($dadosArtigosJ1['J3_ID'][$key]) ){
 	                        $dadosArtigosJ1['STATUS'][$key] = '<span style="color:red">INCLUIR</span>';
 	                    } else {
-	                        $dadosArtigosJ1['STATUS'][$key] = '<span style="color:RED">ATUALIZAR</span>';
+	                        $dadosArtigosJ1['STATUS'][$key] = '<span style="color:Magenta">ATUALIZAR</span>';
 	                    }
 	                }
 	            }	            
@@ -89,7 +89,7 @@ class Relatorios {
 	    return $dadosArtigosJ1;
 	}
 	
-	private static function formataArtigosModificados( $daoJ25, $datIncial ,$datFim ){
+	private function formataArtigosModificados( $daoJ25, $datIncial ,$datFim ){
 	    $dadosArtigos = $daoJ25->selectAlterados($datIncial,$datFim);
 	    $dadosArtigos = self::incluirDadosJ3($dadosArtigos, 'U');
 	    $result = self::trataArtigosLinkJoomlaAntigo($dadosArtigos);
@@ -105,7 +105,7 @@ class Relatorios {
 		$result = null;
 		$daoJ25 = new J25_contentDAO();
 	    $result['CONTENT']['SQL'] = $daoJ25->getSqlSelectAlterdos($datIncial,$datFim);	    
-	    //$result['CONTENT']['RESULT'] = self::formataArtigosModificados($daoJ25, $datIncial, $datFim);
+	    $result['CONTENT']['RESULT'] = $this->formataArtigosModificados($daoJ25, $datIncial, $datFim);
 	    
 	    return $result;
 	}

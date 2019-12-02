@@ -32,7 +32,8 @@ switch( $acao ) {
         if ( $frm->validate() ) {
             $datIncial = $frm->getFieldValue('DATINICIAL');
             $datFim = $frm->getFieldValue('DATFINAL');
-            $resultado = Relatorios::getArtigosModificados($datIncial,$datFim);
+            $controllers = new Relatorios();
+            $resultado = $controllers->getArtigosModificados($datIncial,$datFim);
             
             $artigos  = $resultado['CONTENT'];
             
