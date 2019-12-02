@@ -89,29 +89,30 @@ class Relatorios {
 	    return $dadosArtigosJ1;
 	}
 	
-	private static function formataArtigosModificados( $datIncial ,$datFim ){
-	    $dadosArtigos = ContentDAO::selectAlterados($datIncial,$datFim);
+	private static function formataArtigosModificados( $daoJ25, $datIncial ,$datFim ){
+	    $dadosArtigos = $daoJ25->selectAlterados($datIncial,$datFim);
 	    $dadosArtigos = self::incluirDadosJ3($dadosArtigos, 'U');
 	    $result = self::trataArtigosLinkJoomlaAntigo($dadosArtigos);
 	    return $result;
 	}
 	
-	public static function getArtigosModificados( $datIncial ,$datFim ){
+	public function getArtigosModificados( $datIncial ,$datFim ){
 	    if( empty($datIncial) ){
 	        throw new DomainException('Informe uma data inicial');
 	    }
 	    $datIncial = DateTimeHelper::date2Mysql($datIncial);
 	    $datFim = DateTimeHelper::date2Mysql($datFim);
-	    $result = null;
-	    $result['CONTENT']['SQL'] = ContentDAO::getSqlSelectAlterdos($datIncial,$datFim);	    
-	    $result['CONTENT']['RESULT'] = self::formataArtigosModificados($datIncial, $datFim);
+		$result = null;
+		$daoJ25 = new J25_contentDAO();
+	    $result['CONTENT']['SQL'] = $daoJ25->getSqlSelectAlterdos($datIncial,$datFim);	    
+	    //$result['CONTENT']['RESULT'] = self::formataArtigosModificados($daoJ25, $datIncial, $datFim);
 	    
 	    return $result;
 	}
 
 	public function getSQLUltimoArtigoJ3(){
-		$controllers = new J39_contentDAO();
-		$result = $controllers->getSQLUltimoArtigoJ3();
+		$daoJ25 = new J25_contentDAO();
+		$result = $daoJ25->getSQLUltimoArtigoJ3();
 		return $result;
 	}
 	

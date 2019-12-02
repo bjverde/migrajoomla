@@ -352,6 +352,24 @@ class J25_contentDAO
 	    $sql = $this->getSqlSelectNovos($datInicio, $datFim);
 	    $result = $this->tpdo->executeSql($sql);
 	    return $result;
+    }
+	//--------------------------------------------------------------------------------
+	public function getSqlSelectAlterdos( $datInicio, $datFim ) {
+	    $sql = "SELECT jc.id as j1_id
+            		,jc.title as j1_title
+            		,jc.created as j1_created
+            		,jc.modified as j1_modified
+            		,CASE WHEN ".self::getCampoData('modified', $datInicio, $datFim)." THEN 'SIM' ELSE '' END as j1_criterio_mod
+        		FROM ".J25_DB.'.'.J25_DBID.'content as jc
+        		WHERE  '.self::getCampoData('modified', $datInicio, $datFim)."
+        		and date(jc.created) <> date(jc.modified)
+        		order by jc.modified";
+	    return $sql;
+	}
+	public function selectAlterados( $datInicio, $datFim ) {
+	    $sql = $this->getSqlSelectAlterdos($datInicio, $datFim);
+	    $result = $this->tpdo->executeSql($sql);
+	    return $result;
 	}    
 }
 ?>
