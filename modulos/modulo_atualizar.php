@@ -11,42 +11,27 @@ $frm->setMaximize(true);
 
 $frm->addHtmlField('aviso','Selecione o Módulo que deseja atualizar. Os dados serão migrados do '.J25.' para '.J39);
 
-$frm->addButton('Atualizar', null, 'Migrar', null, null, true, false);
+$frm->addButton('Atualizar', null, 'Atualizar', null, null, true, false);
 $frm->addButton('Limpar', null, 'Limpar', null, null, false, false);
 
-$dados = array();
-$gride = gerarGride( 'gdModulos', 'Lista de Módulo no '.J25 ,$dados );
+$controllers = new Relatorios();
+$dados = $controllers->getModulosJ25();
+$gride = gerarGride( 'gdModulos', 'Lista de Módulo PUBLICADOS no '.J25 ,$dados );
 $frm->addHtmlField('grideModulos',$gride);
 
 
 $acao = isset($acao) ? $acao : null;
 switch( $acao ) {
-    case 'Pesquisar':
-        if ( $frm->validate() ) {
-            $datIncial = $frm->getFieldValue('DATINICIAL');
-            $datFim = $frm->getFieldValue('DATFINAL');
-            $controllers = new Relatorios();
-            $resultado = $controllers->getArtigosModificados($datIncial,$datFim);
-            
-            $artigos  = $resultado['CONTENT'];
-            
-            $grupo = $frm->getField('gpArtigos');
-            $grupo->setOpened(true);
-            $grideArquivos = gerarGrideArtigos( 'gdArtigo', 'Artigos Modificados, ordenados por data modificação', $artigos['RESULT'] );
-            $frm->setFieldValue('grideArtigos',$grideArquivos);
-            $frm->setFieldValue('sqlArtigos',$artigos['SQL']);
-            
-        }
-    break;
     //--------------------------------------------------------------------------------
-    case 'Migrar':
-        $listIdArtigos = PostHelper::getArray('idCheckColumn');
+    case 'Atualizar':
+        $listIdModulos = PostHelper::getArray('idCheckColumn');
+        d($listIdModulos);
         try{
             if(empty($listIdArtigos)){
                 $frm->setMessage('Selecione os itens que deseja migrar');
             }else{
                 $controllers = new Migrar();
-                $msg = $controllers->artigosAtualizar($listIdArtigos);
+                //$msg = $controllers->artigosAtualizar($listIdArtigos);
                 $frm->setMessage( $msg );
             }
         }
@@ -70,14 +55,9 @@ function gerarGride( $gdId, $gdTitulo ,$dados ) {
     $gride = new TGrid( $gdId,$gdTitulo);
     $gride->setData( $dados ); // array de dados
     $gride->addRowNumColumn();
-    $gride->addCheckColumn('idCheckColumn','J1 id','J1_ID','J1_ID',true,true);
-    $gride->addColumn('STATUS','Status',null,'center');
-    $gride->addColumn('J1_TITLE','J1 Titulo');
-    $gride->addColumn('J1_CREATED','J1 Dat Criação',null,'center');
-    $gride->addColumn('J1_MODIFIED','J1 Dat Modificação',null,'center');    
-    $gride->addColumn('J3_ID','J3 Id',null,'center');
-    $gride->addColumn('J3_TITLE','J3 Titulo');
-    $gride->addColumn('J3_MODIFIED','J3 Dat Modificação');    
+    $gride->addCheckColumn('idCheckColumn','id','ID','ID',true,true);
+    $gride->addColumn('TITLE','Titulo');
+    $gride->addColumn('MODULE','Módulo');
     $gride->enableDefaultButtons(false);
     return $gride;
 }

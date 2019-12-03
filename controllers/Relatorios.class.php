@@ -144,5 +144,13 @@ class Relatorios {
 	    $dados['MODIFIED'][0]=$result['J3_MODIFIED'][0];
 	    return $dados;
 	}
+
+	public function getModulosJ25() {
+		$daoJ25 = new J25_modulesDAO();
+		$whereGrid = array();
+		$whereGrid['PUBLISHED']=1;
+		$dados = $daoJ25->selectAll('title',$whereGrid);
+		return $dados;
+	}
 }
 ?>
