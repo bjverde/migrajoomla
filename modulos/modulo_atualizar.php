@@ -58,6 +58,8 @@ function gerarGride( $gdId, $gdTitulo ,$dados ) {
     $gride->addCheckColumn('idCheckColumn','id','ID','ID',true,true);
     $gride->addColumn('TITLE','Titulo');
     $gride->addColumn('MODULE','Módulo');
+    $gride->addColumn('CONTENT','Conteudo');
+    //$gride->addColumn('PARAMS','Json');
     $gride->enableDefaultButtons(false);
     return $gride;
 }
