@@ -47,6 +47,7 @@ class Migrar {
 				$objVoJ39 = $daoJ39->getVoById($idArtigo);
 				$artigoJ5 = $this->getArtigoJ25($idArtigo);
 				$objVoJ39 = $this->setVoJ39( $objVoJ39, $artigoJ5 );
+				$daoJ39 = new J39_contentDAO();
 				$daoJ39->update($objVoJ39);
 	            $listArtigosOK[]=$idArtigo;
 	        }else{
