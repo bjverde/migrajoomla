@@ -44,9 +44,8 @@ class Migrar {
 			$daoJ39 = new J39_contentDAO();
 			$temArigo = $daoJ39->temArtigoById($idArtigo);
 	        if( $temArigo ){
-				$objVoJ39  = $daoJ39->getVoById($idArtigo);
-				$daoJ25 = new J25_contentDAO();
-				$artigoJ5 = $daoJ25->selectById($idArtigo);
+				$objVoJ39 = $daoJ39->getVoById($idArtigo);
+				$artigoJ5 = $this->getArtigoJ25($idArtigo);
 				$objVoJ39 = $this->setVoJ39( $objVoJ39, $artigoJ5 );
 				$daoJ39->update($objVoJ39);
 	            $listArtigosOK[]=$idArtigo;
@@ -58,28 +57,12 @@ class Migrar {
 	    return $result;
 	}
 	//--------------------------------------------------------------------------------
-	private static function artigosIncluirAssests( $artigoJ1 ){
-	    if( !is_array($artigoJ1) ){
-	        throw new DomainException('Dados do Artigo Joomla 1.5.14 em branco!');
-	    }
-	    $asset =  array();
-	    $rgt = J3AssetsDAO::getMaxRgt();
-	    $name = 'com_content.article.'.$artigoJ1['ID'][0];
-	    
-	    $idAssests = J3AssetsDAO::getIdAssetsByName($name);
-	    if( empty($idAssests) ){
-    	    $asset['PARENT_ID'] = 1;
-    	    $asset['LFT'] = $rgt+1;
-    	    $asset['RGT'] = $rgt+2;
-    	    $asset['LEVEL'] = 4;
-    	    $asset['NAME'] = $name;
-    	    $asset['TITLE'] = $artigoJ1['TITLE'][0];
-    	    $asset['RULES'] = '{"core.delete":{"6":1},"core.edit":{"6":1,"4":1},"core.edit.state":{"6":1,"5":1}}';
-    	    $asset = J3AssetsDAO::insert($asset);
-    	    $idAssests = J3AssetsDAO::getIdAssetsByName($name);
-	    }	    
-	    return $idAssests;
+	public function getArtigoJ25( $idArtigo ){
+		$daoJ25 = new J25_contentDAO();
+		$artigoJ5 = $daoJ25->selectById($idArtigo);
+		return $artigoJ5;
 	}
+	//--------------------------------------------------------------------------------
 	public function setVoJ39( J39_contentVO $objVoJ39, $artigoJ25 ){
 		$objVoJ39->setAsset_id( $artigoJ25['ASSET_ID'][0] );
 		$objVoJ39->setTitle(empty($artigoJ25['TITLE'][0])?' ':$artigoJ25['TITLE'][0]);
@@ -121,8 +104,7 @@ class Migrar {
 	    $listArtigosFalha = array();
 	    $listArtigosOK = array();
 	    foreach ($listIdsArtigos as $idJ1) {
-			$daoContentJ25 = new J25_contentDAO();
-			$artigoJ1 = $daoContentJ25->selectById($idJ1);
+			$artigoJ1 = $this->getArtigoJ25($idJ1);
 			
 			$objVoJ39 = new J39_contentVO();
 			$objVoJ39->setId( $artigoJ1['ID'][0] );
