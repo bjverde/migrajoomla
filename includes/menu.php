@@ -13,9 +13,10 @@
 $menu = new TMenuDhtmlx();
 $menu->add('1', null, 'Menu', null, null, 'menu-alt-512.png');
     $menu->add('11',1,'Artigos e Usuários Novos','modulos/artigos_novos.php', null, 'mais.gif');
-    $menu->add('12',1,'Artigos Modificados','modulos/artigos_modificados.php', null, 'respond.gif');    
-    $menu->add('13',1,'Atualizar um artigo','modulos/artigos_atualizar.php', null, 'move16.gif');
-    $menu->add('14',1,'Atualizar Publicar artigo','modulos/artigos_publicar.php', null, 'ok16.gif');
+    $menu->add('12',1,'Artigos Modificados','modulos/artigos_modificados.php', null, 'respond.gif');
+    $menu->add('13',1,'Atualizar Módulo','modulos/modulo_atualizar.php', null, 'adicionar_pasta.gif');
+    //$menu->add('13',1,'Atualizar um artigo','modulos/artigos_atualizar.php', null, 'move16.gif');
+    //$menu->add('14',1,'Atualizar Publicar artigo','modulos/artigos_publicar.php', null, 'ok16.gif');
 
 $menu->add('9', null, 'Sobre', 'modulos/sys_about.php', null, 'information-circle.jpg');
 

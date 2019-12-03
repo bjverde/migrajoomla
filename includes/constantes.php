@@ -14,8 +14,8 @@ if( $ambiente == 'produção' || $ambiente == 'producao' ) {
     $ambiente = null;
 }
 
-define('J25'    , 'Joomla 2.5');
-define('J39'    , 'Joomla 3.9');
+define('J25'    , 'Joomla 2.5.8');
+define('J39'    , 'Joomla 3.9.13');
 
 define('J25_DB', 'joomlainternet');
 define('J25_DBID','j16_');
