@@ -370,6 +370,22 @@ class J25_contentDAO
 	    $sql = $this->getSqlSelectAlterdos($datInicio, $datFim);
 	    $result = $this->tpdo->executeSql($sql);
 	    return $result;
+    }
+	//--------------------------------------------------------------------------------
+	public function getSqlSelectStates( $idmin, $idmax ) {
+	    $sql = 'SELECT co.id
+		             , co.state
+                FROM '.J25_DB.'.'.J25_DBID.'content as co
+				WHERE  1=1 ';
+		$sql = !empty($idmin)?$sql." and co.id >= ".$idmin:$sql.'';
+		$sql = !empty($idmax)?$sql." and co.id <= ".$idmax:$sql.'';
+		$sql = $sql." order by co.id";
+	    return $sql;
+	}
+	public function selectSelectStates( $idmin, $idmax ) {	    
+	    $sql = $this->getSqlSelectStates( $idmin, $idmax );
+	    $result = $this->tpdo->executeSql($sql);
+	    return $result;
 	}    
 }
 ?>

@@ -40,9 +40,11 @@ class Publicar {
 	    if( $idmin > $idmax ){
 	        throw new DomainException('Valor Max deve ser maior que o Min');
         }
-        
-        $artigosStateJ1 = ContentDAO::selectSelectStates( $idmin, $idmax );
-        $artigosStateJ3 = J3ContentDAO::selectSelectStates( $idmin, $idmax );
+		
+		$daoJ25 = new J25_contentDAO();
+		$artigosStateJ1 = $daoJ25->selectSelectStates( $idmin, $idmax );
+		$daoJ39 = new J39_contentDAO();
+        $artigosStateJ3 = $daoJ39->selectSelectStates( $idmin, $idmax );
         
         $listIdsArtigos   = $artigosStateJ3['J3_ID'];
 	    $listArtigosIguais= array();
@@ -62,7 +64,7 @@ class Publicar {
     	            $listArtigosAtualizar[]=$value;
     	            $id = $value;
     	            $state = $artigosStateJ1['STATE'][$keyJ1];
-    	            J3ContentDAO::updateState( $id ,$state );
+    	            $daoJ39->updateState( $id ,$state );
     	        }
 	        }
 	    }

@@ -442,5 +442,38 @@ class J39_contentDAO
         }
         return $result;
     }
+	//--------------------------------------------------------------------------------
+	public function getSqlSelectStates( $idmin, $idmax ) {
+	    $sql = 'SELECT co.id as j3_id
+		             , co.state as j3_state
+                FROM '.J39_DB.'.'.J39_DBID.'content as co
+				WHERE  1=1 ';
+		$sql = !empty($idmin)?$sql." and co.id >= ".$idmin:$sql.'';
+		$sql = !empty($idmax)?$sql." and co.id <= ".$idmax:$sql.'';
+		$sql = $sql." order by co.id";
+	    return $sql;
+	}
+	public function selectSelectStates( $idmin, $idmax ) {	    
+	    $sql = $this->getSqlSelectStates( $idmin, $idmax );
+	    $result = $this->tpdo->executeSql($sql);
+	    return $result;
+	}
+	//--------------------------------------------------------------------------------
+	public function updateState ( $id, $state ) {
+	    if( !is_numeric($id) ){
+	        throw new DomainException('Id não numero informado');
+	    }
+	    
+	    if( !is_numeric($state) ){
+	        throw new DomainException('Id: '.$id.'. State não informado');
+	    }
+	    
+	    $values = array( $state, $id );
+	    $sql = 'update '.J39_DB.'.'.J39_DBID.'content set
+    				   state = ?
+    			 where id = ?';
+	    $result = $this->tpdo->executeSql($sql,$values);
+	    return $result;
+	}
 }
 ?>
