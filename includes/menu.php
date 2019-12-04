@@ -17,6 +17,7 @@ $menu->add('1', null, 'Menu', null, null, 'menu-alt-512.png');
     $menu->add('13',1,'Atualizar Módulo','modulos/modulo_atualizar.php', null, 'adicionar_pasta.gif');
     $menu->add('14',1,'Atualizar um artigo','modulos/artigos_atualizar.php', null, 'move16.gif');
     $menu->add('15',1,'Atualizar Publicar artigo','modulos/artigos_publicar.php', null, 'ok16.gif');
+    $menu->add('15',1,'Atualizar Destaque artigo','modulos/artigos_destaque.php', null, 'icon_alert.png');
 
 $menu->add('9', null, 'Sobre', 'modulos/sys_about.php', null, 'information-circle.jpg');
 
