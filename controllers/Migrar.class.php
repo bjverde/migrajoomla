@@ -117,5 +117,48 @@ class Migrar {
 	    $result = self::msgAcaoMateriaSucesso($listIdsArtigos,$listArtigosOK,$listArtigosFalha);
 	    return $result;
 	}
+	//--------------------------------------------------------------------------------
+	public function modulosAtualizar( $listIdsModulos ){
+		if( !is_array($listIdsModulos) ){
+			throw new DomainException('Selecione os itens que deseja incluir');
+		}
+
+		$listModulosFalha = array();
+		$listModulosOK = array();
+		foreach ($listIdsModulos as $idModuloJ25) {
+			$daoJ25 = new J25_modulesDAO();
+			$dados = $daoJ25->selectById($idModuloJ25);
+
+			$daoJ39 = new J39_modulesDAO();
+			$objVoJ39 = $daoJ39->getVoById($idModuloJ25);
+
+			$objVoJ39->setAsset_id( $dados['ID'][0] );
+			$objVoJ39->setTitle( $dados['TITLE'][0] );
+			$objVoJ39->setNote( $dados['NOTE'][0] );
+			$objVoJ39->setContent( $dados['CONTENT'][0] );
+			$objVoJ39->setOrdering( $dados['ORDERING'][0] );
+			$objVoJ39->setPosition( $dados['POSITION'][0] );
+			$objVoJ39->setChecked_out( $dados['CHECKED_OUT'][0] );
+			$objVoJ39->setChecked_out_time( $dados['CHECKED_OUT_TIME'][0] );
+			$objVoJ39->setPublish_up( $dados['PUBLISH_UP'][0] );
+			$objVoJ39->setPublish_down( $dados['PUBLISH_DOWN'][0] );
+			$objVoJ39->setPublished( $dados['PUBLISHED'][0] );
+			$objVoJ39->setModule( $dados['MODULE'][0] );
+			$objVoJ39->setAccess( $dados['ACCESS'][0] );
+			$objVoJ39->setShowtitle( $dados['SHOWTITLE'][0] );
+			$objVoJ39->setParams( $dados['PARAMS'][0] );
+			$objVoJ39->setClient_id( $dados['CLIENT_ID'][0] );
+			$objVoJ39->setLanguage( $dados['LANGUAGE'][0] );
+
+			$result = $daoJ39->update($objVoJ39);
+			if( $result ){
+				$listModulosOK[]=$idModuloJ25;
+			} else {
+				$listModulosFalha[]=$idModuloJ25;
+			}
+		}
+		$result = self::msgAcaoMateriaSucesso($listIdsModulos,$listModulosOK,$listModulosFalha);
+		return $result;
+	}
 }
 ?>

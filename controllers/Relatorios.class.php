@@ -148,7 +148,8 @@ class Relatorios {
 	public function getModulosJ25() {
 		$daoJ25 = new J25_modulesDAO();
 		$whereGrid = array();
-		$whereGrid['PUBLISHED']=1;
+		//$whereGrid['PUBLISHED']=1;
+		$whereGrid = ' PUBLISHED=1 and id<>81 ';
 		$dados = $daoJ25->selectAll('title',$whereGrid);
 		return $dados;
 	}

@@ -31,7 +31,7 @@ class J39_modulesDAO
                                      ,params
                                      ,client_id
                                      ,language
-                                     from portal.j36_modules ';
+                                     from '.J39_DB.'.'.J39_DBID.'modules ';
 
     private $tpdo = null;
 
@@ -100,7 +100,7 @@ class J39_modulesDAO
     public function selectCount( $where=null )
     {
         $where = $this->processWhereGridParameters($where);
-        $sql = 'select count(id) as qtd from portal.j36_modules';
+        $sql = 'select count(id) as qtd from '.J39_DB.'.'.J39_DBID.'modules';
         $sql = $sql.( ($where)? ' where '.$where:'');
         $result = $this->tpdo->executeSql($sql);
         return $result['QTD'][0];
@@ -151,7 +151,7 @@ class J39_modulesDAO
                         , $objVo->getClient_id() 
                         , $objVo->getLanguage() 
                         );
-        $sql = 'insert into portal.j36_modules(
+        $sql = 'insert into '.J39_DB.'.'.J39_DBID.'modules(
                                  asset_id
                                 ,title
                                 ,note
@@ -195,7 +195,7 @@ class J39_modulesDAO
                         ,$objVo->getClient_id()
                         ,$objVo->getLanguage()
                         ,$objVo->getId() );
-        $sql = 'update portal.j36_modules set 
+        $sql = 'update '.J39_DB.'.'.J39_DBID.'modules set 
                                  asset_id = ?
                                 ,title = ?
                                 ,note = ?
@@ -222,7 +222,7 @@ class J39_modulesDAO
     {
         FormDinHelper::validateIdIsNumeric($id,__METHOD__,__LINE__);
         $values = array($id);
-        $sql = 'delete from portal.j36_modules where id = ?';
+        $sql = 'delete from '.J39_DB.'.'.J39_DBID.'modules where id = ?';
         $result = $this->tpdo->executeSql($sql, $values);
         return $result;
     }
@@ -233,7 +233,7 @@ class J39_modulesDAO
         $result = $this->selectById( $id );
         $result = \ArrayHelper::convertArrayFormDin2Pdo($result,false);
         $result = $result[0];
-        $vo = new J36_modulesVO();
+        $vo = new J39_modulesVO();
         $vo = \FormDinHelper::setPropertyVo($result,$vo);
         return $vo;
     }

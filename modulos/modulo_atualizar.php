@@ -25,13 +25,12 @@ switch( $acao ) {
     //--------------------------------------------------------------------------------
     case 'Atualizar':
         $listIdModulos = PostHelper::getArray('idCheckColumn');
-        d($listIdModulos);
         try{
-            if(empty($listIdArtigos)){
+            if(empty($listIdModulos)){
                 $frm->setMessage('Selecione os itens que deseja migrar');
             }else{
                 $controllers = new Migrar();
-                //$msg = $controllers->artigosAtualizar($listIdArtigos);
+                $msg = $controllers->modulosAtualizar($listIdModulos);
                 $frm->setMessage( $msg );
             }
         }
