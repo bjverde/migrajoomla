@@ -12,6 +12,14 @@ $msgSysNameVersion = SYSTEM_NAME.' - v'.SYSTEM_VERSION;
 </head>
 <body>
     <h2><?php echo($msgSysNameVersion); ?></h2>
+    <li>versão 2.1.0 - 04/11/2019</li>
+        <ul>
+            <li>Atulizando Modulos, Artigos Destaque</li>
+        </ul>     
+    <li>versão 2.0.0 - 21/11/2019</li>
+        <ul>
+            <li>Migrando dados do Joomla 2.5.8 para 3.9.13</li>
+        </ul>     
     <li>versão 1.4.0 - 14/01/2019</li>
         <ul>
             <li>Tela para atulizar o status</li>
