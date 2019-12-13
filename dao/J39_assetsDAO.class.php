@@ -29,7 +29,15 @@ class J39_assetsDAO
     {
         FormDinHelper::validateObjTypeTPDOConnectionObj($tpdo,__METHOD__,__LINE__);
         if( empty($tpdo) ){
+            $perfilBancoJ39  = ServidorConfig::getInstancia()->getPerfilJ39();
             $tpdo = New TPDOConnectionObj();
+            $tpdo->setDBMS(DBMS_MYSQL);
+            $tpdo->setHost($perfilBancoJ39['HOST']);
+            $tpdo->setPort($perfilBancoJ39['PORT']);
+            $tpdo->setDataBaseName($perfilBancoJ39['DATABASE']);
+            $tpdo->setUsername($perfilBancoJ39['USERNAME']);
+            $tpdo->setPassword($perfilBancoJ39['PASSWORD']);
+            $tpdo->connect(null,true,null,null);
         }
         $this->setTPDOConnection($tpdo);
     }
