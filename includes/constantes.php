@@ -31,7 +31,7 @@ define('J39_DBID','j36_');
 define('SYSTEM_NAME'    , 'Migração do Joomla 2.5 para 3.9');
 define('SYSTEM_NAME_SUB', $ambiente);
 define('SYSTEM_ACRONYM' , 'migraj');
-define('SYSTEM_VERSION' , '2.1.1');
+define('SYSTEM_VERSION' , '2.1.2');
 define('APLICATIVO'     , SYSTEM_ACRONYM);
 
 define('FORMDIN_VERSION_MIN_VERSION', '4.7.8');

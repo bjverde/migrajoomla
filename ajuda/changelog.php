@@ -12,6 +12,14 @@ $msgSysNameVersion = SYSTEM_NAME.' - v'.SYSTEM_VERSION;
 </head>
 <body>
     <h2><?php echo($msgSysNameVersion); ?></h2>
+    <li>versão 2.1.2 - 13/11/2019</li>
+        <ul>
+            <li>Bug banco conteudo destaque</li>
+        </ul>      
+    <li>versão 2.1.1 - 13/11/2019</li>
+        <ul>
+            <li>Bug banco dinamicos</li>
+        </ul>     
     <li>versão 2.1.0 - 04/11/2019</li>
         <ul>
             <li>Atulizando Modulos, Artigos Destaque</li>

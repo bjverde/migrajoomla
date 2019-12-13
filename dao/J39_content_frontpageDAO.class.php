@@ -15,7 +15,7 @@ class J39_content_frontpageDAO
     private static $sqlBasicSelect = 'select
                                       content_id
                                      ,ordering
-                                     from portal.j36_content_frontpage ';
+                                     from '.J39_DB.'.'.J39_DBID.'content_frontpage ';
 
     private $tpdo = null;
 
@@ -68,7 +68,7 @@ class J39_content_frontpageDAO
     public function selectCount( $where=null )
     {
         $where = $this->processWhereGridParameters($where);
-        $sql = 'select count(content_id) as qtd from portal.j36_content_frontpage';
+        $sql = 'select count(content_id) as qtd from '.J39_DB.'.'.J39_DBID.'content_frontpage';
         $sql = $sql.( ($where)? ' where '.$where:'');
         $result = $this->tpdo->executeSql($sql);
         return $result['QTD'][0];
@@ -103,7 +103,7 @@ class J39_content_frontpageDAO
     {
         $values = array( $objVo->getOrdering()
                         ,$objVo->getContent_id() );
-        $sql = 'insert into portal.j36_content_frontpage(
+        $sql = 'insert into '.J39_DB.'.'.J39_DBID.'content_frontpage(
                                   content_id
                                  ,ordering
                                 ) values (?,?)';
@@ -115,7 +115,7 @@ class J39_content_frontpageDAO
     {
         $values = array( $objVo->getOrdering()
                         ,$objVo->getContent_id() );
-        $sql = 'update portal.j36_content_frontpage set 
+        $sql = 'update '.J39_DB.'.'.J39_DBID.'content_frontpage set 
                                  ordering = ?
                                 where content_id = ?';
         $result = $this->tpdo->executeSql($sql, $values);
@@ -126,7 +126,7 @@ class J39_content_frontpageDAO
     {
         FormDinHelper::validateIdIsNumeric($id,__METHOD__,__LINE__);
         $values = array($id);
-        $sql = 'delete from portal.j36_content_frontpage where content_id = ?';
+        $sql = 'delete from '.J39_DB.'.'.J39_DBID.'content_frontpage where content_id = ?';
         $result = $this->tpdo->executeSql($sql, $values);
         return $result;
     }
